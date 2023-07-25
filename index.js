@@ -33,19 +33,19 @@ async function readFileAndCount (word, callback) {
   const PATH_NOT_FOUND = 'No se ha especificado el path del archivo'
 
   if (!word) {
-    callback(null, TEXT_NOT_FOUND)
+    callback(new Error(TEXT_NOT_FOUND))
     process.exit(1)
   }
 
   if (!filePath) {
-    callback(null, PATH_NOT_FOUND)
+    callback(new Error(PATH_NOT_FOUND))
     process.exit(1)
   }
 
   try {
     await fs.access(filePath)
   } catch (error) {
-    callback(null, FILE_NOT_FOUND)
+    callback(null, FILE_NOT_FOUND) // ?
     process.exit(1)
   }
 
