@@ -21,7 +21,7 @@ async function writeFile (filePath, data, callback) {
     callback() // Call the callback after the write operation is complete
   } catch (error) {
     console.log('Error al escribir el archivo', error)
-    process.exit(1)
+    process.exit(0)
   }
 }
 
@@ -34,28 +34,29 @@ async function readFileAndCount (word, callback) {
 
   if (!word) {
     callback(new Error(TEXT_NOT_FOUND))
-    process.exit(1)
+    process.exit(0)
   }
 
   if (!filePath) {
     callback(new Error(PATH_NOT_FOUND))
-    process.exit(1)
+    process.exit(0)
   }
 
   try {
     await fs.access(filePath)
   } catch (error) {
     callback(null, FILE_NOT_FOUND) // ?
-    process.exit(1)
+    process.exit(0)
   }
 
   try {
     const data = await fs.readFile(filePath, 'utf-8')
     const count = data.split(word).length - 1
-    callback(null, count)
+    callback(undefined, count)
   } catch (error) {
     console.log('Error al leer el archivo', error)
-    callback(null, 0)
+    callback(new Error(PATH_NOT_FOUND))
+    process.exit(0)
   }
 }
 
