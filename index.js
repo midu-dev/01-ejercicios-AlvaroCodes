@@ -51,7 +51,6 @@ async function readFileAndCount (word, callback) {
 
   try {
     const data = await fs.readFile(filePath, 'utf-8')
-    console.log('data', data.split(word).length - 1)
     const count = data.split(word).length - 1
     callback(null, count)
   } catch (error) {
